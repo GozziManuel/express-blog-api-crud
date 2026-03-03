@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const posts = [
+let posts = [
   {
     id: 1,
     title: "Ciambellone",
@@ -104,7 +104,16 @@ router.patch("/posts/:id", (req, res) => {
 
 // Destroy
 router.delete("/posts/:id", (req, res) => {
-  const postId = req.params.id;
+  const postId = parseInt(req.params.id);
+  const postFind = posts.find((post) => post.id === postId);
+  if (!postFind) {
+    return res.status(404).json({
+      result: "404 not Found",
+    });
+  }
+
+  posts = posts.filter((post) => post.id !== postId);
+
   res.json({
     Post_Number: postId,
     description: `you are eliminating post number ${postId}`,
