@@ -1,13 +1,15 @@
-let posts = require("../data/posts");
+let postsData = require("../data/posts");
 
-function Home(req, res) {
+function home(req, res) {
   res.json({
     success: true,
     result: posts,
   });
 }
 
-function Show(req, res) {
+// Funzione Show
+function show(req, res) {
+  let posts = [...postsData];
   const postId = parseInt(req.params.id);
   const postFind = posts.find((post) => post.id === postId);
   if (!postFind) {
@@ -23,30 +25,32 @@ function Show(req, res) {
   });
 }
 
-function Store(req, res) {
+function store(req, res) {
   res.json({
     result: `Post Creato con successo`,
     success: true,
   });
 }
 
-function Update(req, res) {
+function update(req, res) {
   const postId = req.params.id;
   res.json({
-    Post_Number: postId,
+    postNumber: postId,
     description: `you are modifying post number ${postId}`,
   });
 }
 
-function Modify(req, res) {
+function modify(req, res) {
   const postId = req.params.id;
   res.json({
-    Post_Number: postId,
+    postNumber: postId,
     description: `you are modifying partially post number ${postId}`,
   });
 }
 
-function Destroy(req, res) {
+function destroy(req, res) {
+  let posts = [...postsData];
+
   const postId = parseInt(req.params.id);
   const postFind = posts.find((post) => post.id === postId);
   if (!postFind) {
@@ -58,9 +62,9 @@ function Destroy(req, res) {
   posts = posts.filter((post) => post.id !== postId);
 
   res.json({
-    Post_Number: postId,
+    postNumber: postId,
     description: `you are eliminating post number ${postId}`,
   });
 }
 
-module.exports = { Home, Show, Store, Update, Modify, Destroy };
+module.exports = { home, show, store, update, modify, destroy };
