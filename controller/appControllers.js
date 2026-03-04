@@ -38,10 +38,23 @@ function store(req, res) {
 }
 
 function update(req, res) {
-  const postId = req.params.id;
+  let posts = [...postsData];
+  const postId = parseInt(req.params.id);
+  const postFind = posts.find((post) => post.id === postId);
+  if (!postFind) {
+    return res.status(404).json({
+      result: "404 not Found",
+    });
+  }
+
+  postFind.content = req.body.content;
+  postFind.image = req.body.image;
+  postFind.tags = req.body.tags;
+  postFind.title = req.body.title;
+
   res.json({
     postNumber: postId,
-    description: `you are modifying post number ${postId}`,
+    description: `Hai modificato il post ${postId}`,
   });
 }
 
