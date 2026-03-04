@@ -1,6 +1,8 @@
 let postsData = require("../data/posts");
 
 function home(req, res) {
+  let posts = [...postsData];
+
   res.json({
     success: true,
     result: posts,
@@ -13,7 +15,7 @@ function show(req, res) {
   const postId = parseInt(req.params.id);
   const postFind = posts.find((post) => post.id === postId);
   if (!postFind) {
-    return res.json({
+    return res.status(404).json({
       result: "404 not Found",
     });
   }
@@ -49,17 +51,15 @@ function modify(req, res) {
 }
 
 function destroy(req, res) {
-  let posts = [...postsData];
-
   const postId = parseInt(req.params.id);
-  const postFind = posts.find((post) => post.id === postId);
+  const postFind = postsData.find((post) => post.id === postId);
   if (!postFind) {
     return res.status(404).json({
       result: "404 not Found",
     });
   }
 
-  posts = posts.filter((post) => post.id !== postId);
+  postsData = postsData.filter((post) => post.id !== postId);
 
   res.json({
     postNumber: postId,
