@@ -1,4 +1,5 @@
 let postsData = require("../data/posts");
+const { post } = require("../router/posts");
 
 function home(req, res) {
   let posts = [...postsData];
@@ -28,7 +29,8 @@ function show(req, res) {
 }
 
 function store(req, res) {
-  console.log(req.body);
+  const newPost = req.body;
+  postsData.push(newPost);
   res.json({
     result: `Post Creato con successo`,
     success: true,
