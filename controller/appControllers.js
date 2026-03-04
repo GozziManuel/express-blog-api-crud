@@ -28,6 +28,7 @@ function show(req, res) {
 }
 
 function store(req, res) {
+  console.log(req.body);
   res.json({
     result: `Post Creato con successo`,
     success: true,
