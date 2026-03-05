@@ -5,6 +5,7 @@ const port = 3000;
 const postsRouter = require("./router/posts");
 const ErrorCalibrator = require("./middlewares/ErrorCalibrator");
 const posts = require("./data/posts");
+const notFound = require("./middlewares/notFound404");
 
 // Index route
 app.get("/", (req, res) => {
@@ -22,5 +23,6 @@ app.use("/posts", postsRouter);
 
 // Error Calibrator
 app.use(ErrorCalibrator);
+app.use(notFound);
 
 app.listen(port, () => {});
