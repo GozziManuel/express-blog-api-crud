@@ -1,5 +1,4 @@
 let postsData = require("../data/posts");
-const { post } = require("../router/posts");
 
 function home(req, res) {
   let posts = [...postsData];
@@ -29,7 +28,19 @@ function show(req, res) {
 }
 
 function store(req, res) {
-  const newPost = req.body;
+  let maxId = 0;
+
+  postsData.forEach((post) => {
+    if (post.id > maxId) {
+      maxId = post.id;
+    }
+  });
+
+  const newPost = {
+    id: maxId + 1,
+    ...req.body,
+  };
+
   postsData.push(newPost);
   res.json({
     result: `Post Creato con successo`,
